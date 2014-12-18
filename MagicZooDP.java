@@ -9,6 +9,7 @@ public class MagicZooDP
 
     public MagicZooDP()
     {
+        // som verhogen totdat we de oplossing hebben
         for (int sum = 1; !score.containsKey(FINAL_STATE); sum++)
         {
             System.out.println(String.format("%s Round: %d Map size: %d", new Date(), sum, score.size()));
@@ -19,21 +20,23 @@ public class MagicZooDP
         System.out.println("Score for " + FINAL_STATE + " is " + score.get(FINAL_STATE));
     }
 
+    // berekent de score van de gegeven aantal dieren
     private void compute(int goats, int wolfs, int lions)
     {
-        assert goats >= wolfs;
-        assert wolfs >= lions;
-        assert lions >= 0;
-
         State state = new State(goats, wolfs, lions);
         int value = Integer.MIN_VALUE, v;
 
-        // basis case
+        // basis geval
         if (wolfs == lions)
         {
             score.put(state, goats + wolfs);
             return;
         }
+
+        // hier weten we dat de oplossing het maximum van ten hoogste 3 elementen is,
+        // die allemaal in de map scorePrevious moeten zitten. We hoeven dus niet eens
+        // te kijken of de waarde in de map zit, we gebruiken hem direct.
+        // (de vorige iteratie was namelijk voor een som goats+wolfs+lions van 1 kleiner).
 
         if (wolfs > 0 && lions > 0) // lion eats wolf becomes goat
         {
@@ -42,7 +45,10 @@ public class MagicZooDP
         }
         if (wolfs > 0 && goats > 0) // wolf eats goat becomes lion
         {
-            // re-order if we get more lions than wolfs and/or goats, because problem is symmetric
+            // we houden de argumenten in dalende volgorde, omdat het probleem symmetrisch is.
+            // De reden dat we dit hier doen, en niet in de State constructor, is omdat we hier beter
+            // weten wat we moeten controleren. Voor de case hierboven hoeft er bijvoorbeeld niets
+            // gecontroleerd te worden.
             if (lions + 1 > goats -1)
             {
                 v = scorePrevious.get(new State(lions + 1, goats - 1, wolfs - 1));
@@ -59,7 +65,7 @@ public class MagicZooDP
         }
         if (lions > 0 && goats > 0) // lion eats goat becomes wolf
         {
-            // re-order if we get more wolfs than goats, because problem is symmetric
+            // we houden de argumenten in dalende volgorde, omdat het probleem symmetrisch is.
             if (wolfs + 1 > goats - 1)
             {
                 v = scorePrevious.get(new State(wolfs + 1, goats - 1, lions - 1));
@@ -74,6 +80,9 @@ public class MagicZooDP
         score.put(state, value);
     }
 
+    // De twee for-loops samen lopen alle mogelijke partitioneringen af van 3 groepen en de
+    // gegeven som. Het enige wat we met een verdeling in drie groepen hoeven te doen is de
+    // functie compute hierboven aan te roepen.
     private void process(int sum)
     {
         int min0 = sum / 3 + (sum % 3 == 0 ? 0 : 1);
