@@ -7,11 +7,14 @@ Omdat we een recursieve definitie hebben, waarbij we gebruik maken van een telke
 van argumenten (in elke stap 1 kleiner), lijkt dynamisch programmeren hier goed toepasbaar.
 
 De State class gebruikte ik ook voor een andere oplossingspoging. Hier wordt deze class eenvoudig
-gebruikt om een triple in een map op te slaan. Terwijl ik een nieuwe map (score) vul, gebruik ik
-de waarden van de vorige ronde (met x+y+z 1 kleiner) in scorePrevious.
+gebruikt om een triple in een map op te slaan (niet zo interessant verder). Terwijl ik een nieuwe 
+map (score) vul, gebruik ik de waarden van de vorige ronde (met x+y+z 1 kleiner) in scorePrevious.
 
-Na zo'n 2,5 uur gaf dit programma de oplossing, en heb ik verder niet geprobeerd het efficienter te maken.
-De oplossing is 4023.
+Er zit symmetrie in de mogelijke stappen. Om die reden houden we de hoeveelheid dieren in aflopende volgorde
+(S(x, y, z) = S(z, x, y), de volgorde van de argumenten maakt niet uit).
+
+Na zo'n 2,5 uur gaf dit programma de oplossing, zie de uitvoer hieronder, en heb ik verder niet geprobeerd 
+het efficienter te maken.  De oplossing is 4023.
 
 - S(x, y, z) = max {
       S(x+1, y-1, z-1),
