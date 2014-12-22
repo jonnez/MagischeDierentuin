@@ -13,8 +13,8 @@ map (score) vul, gebruik ik de waarden van de vorige ronde (met x+y+z 1 kleiner)
 Er zit symmetrie in de mogelijke stappen. Om die reden houden we de hoeveelheid dieren in aflopende volgorde
 (S(x, y, z) = S(z, x, y), de volgorde van de argumenten maakt niet uit).
 
-Na zo'n 2,5 uur gaf dit programma de oplossing, zie de uitvoer hieronder, en heb ik verder niet geprobeerd 
-het efficienter te maken.  De oplossing is 4023.
+Na zo'n 2,5 uur gaf dit programma de oplossing, zie de uitvoer hieronder. Later heb ik het programma nog parallel gemaakt met behulp van een Lambda expressie. De sequentiele methode die ik eerst had heb ik in commentaar laten staan, omdat het leuk is om te zien hoe minimaal de aanpassing was. Ik moet nog even meten of en hoeveel het sneller is geworden.
+De oplossing is 4023.
 
 - S(x, y, z) = max {
       S(x+1, y-1, z-1),

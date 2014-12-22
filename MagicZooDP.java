@@ -1,10 +1,12 @@
 import java.util.*;
+import java.util.concurrent.*;
+import java.util.stream.*;
 
 public class MagicZooDP
 {
 //    private static final State FINAL_STATE = new State(55, 17, 6);
     private static final State FINAL_STATE = new State(2055, 2017, 2006);
-    private Map<State, Integer> score = new HashMap<>();
+    private Map<State, Integer> score = new ConcurrentHashMap<>();
     private Map<State, Integer> scorePrevious;
 
     public MagicZooDP()
@@ -14,7 +16,7 @@ public class MagicZooDP
         {
             System.out.println(String.format("%s Round: %d Map size: %d", new Date(), sum, score.size()));
             scorePrevious = score;
-            score = new HashMap<>();
+            score = new ConcurrentHashMap<>();
             process(sum);
         }
         System.out.println("Score for " + FINAL_STATE + " is " + score.get(FINAL_STATE));
@@ -80,6 +82,9 @@ public class MagicZooDP
         score.put(state, value);
     }
 
+    /* Dit was de sequentiele versie die vervangen is door de parallelle versie hieronder.
+       De enige andere wijziging die daarvoor nodig was is het overstappen van een
+       HashMap naar een ConcurrentHashmap voor scores en scorePrevious.
     // De twee for-loops samen lopen alle mogelijke partitioneringen af van 3 groepen en de
     // gegeven som. Het enige wat we met een verdeling in drie groepen hoeven te doen is de
     // functie compute hierboven aan te roepen.
@@ -92,6 +97,21 @@ public class MagicZooDP
             {
                 compute(goats, wolfs, sum - wolfs - goats);
             }
+        }
+    } */
+
+    private void processParallel(int sum)
+    {
+        IntStream.rangeClosed(sum / 3 + (sum % 3 == 0 ? 0 : 1), sum)
+            .parallel()
+            .forEach(goats -> process(sum, goats));
+    }
+
+    private void process(int sum, int goats)
+    {
+        for (int wolfs = Math.min(goats, sum - goats); 2 * wolfs >= sum - goats; wolfs--)
+        {
+            compute(goats, wolfs, sum - wolfs - goats);
         }
     }
 
