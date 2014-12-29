@@ -1,4 +1,4 @@
-public class State implements Comparable<State>
+public class State
 {
     public final int goats;
     public final int wolfs;
@@ -26,22 +26,6 @@ public class State implements Comparable<State>
         return goats == other.goats &&
             wolfs == other.wolfs &&
             lions == other.lions;
-    }
-
-    public int upperbound()
-    {
-        return goats + wolfs;
-    }
-
-    public boolean isStable()
-    {
-        return wolfs == 0 && lions == 0;
-    }
-
-    @Override
-    public int compareTo(State other)
-    {
-        return goats - other.goats;
     }
 
     @Override

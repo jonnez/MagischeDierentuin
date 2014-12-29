@@ -17,7 +17,7 @@ public class MagicZooDP
             System.out.println(String.format("%s Round: %d Map size: %d", new Date(), sum, score.size()));
             scorePrevious = score;
             score = new ConcurrentHashMap<>();
-            process(sum);
+            processParallel(sum);
         }
         System.out.println("Score for " + FINAL_STATE + " is " + score.get(FINAL_STATE));
     }

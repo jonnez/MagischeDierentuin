@@ -6,15 +6,18 @@ Code Challenge Java Magazine #6-2014
 Omdat we een recursieve definitie hebben, waarbij we gebruik maken van een telkens kleinere som
 van argumenten (in elke stap 1 kleiner), lijkt dynamisch programmeren hier goed toepasbaar.
 
-De State class gebruikte ik ook voor een andere oplossingspoging. Hier wordt deze class eenvoudig
-gebruikt om een triple in een map op te slaan (niet zo interessant verder). Terwijl ik een nieuwe 
-map (score) vul, gebruik ik de waarden van de vorige ronde (met x+y+z 1 kleiner) in scorePrevious.
+De State class wordt slechts gebruikt om een triple van de aantallen van dieren op te slaan.
+Terwijl ik een nieuwe map (score) vul, gebruik ik de waarden van de vorige ronde (met x+y+z 1 kleiner) in scorePrevious.
 
 Er zit symmetrie in de mogelijke stappen. Om die reden houden we de hoeveelheid dieren in aflopende volgorde
 (S(x, y, z) = S(z, x, y), de volgorde van de argumenten maakt niet uit).
 
-Na zo'n 2,5 uur gaf dit programma de oplossing, zie de uitvoer hieronder. Later heb ik het programma nog parallel gemaakt met behulp van een Lambda expressie. De sequentiele methode die ik eerst had heb ik in commentaar laten staan, omdat het leuk is om te zien hoe minimaal de aanpassing was. Ik moet nog even meten of en hoeveel het sneller is geworden.
-De oplossing is 4023.
+Na zo'n 2,5 uur gaf dit programma de oplossing, zie de uitvoer hieronder.
+Later heb ik het programma nog parallel gemaakt met behulp van een Lambda expressie.
+De sequentiele methode die ik eerst had heb ik in commentaar laten staan,
+omdat het leuk is om te zien hoe minimaal de aanpassing was.
+De parallelle versie had bij mij net een rekentijd van 49 minuten.
+De gevraagde oplossing is 4023.
 
 - S(x, y, z) = max {
       S(x+1, y-1, z-1),
